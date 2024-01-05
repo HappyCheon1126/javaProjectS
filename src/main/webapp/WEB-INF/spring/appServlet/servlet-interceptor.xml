@@ -25,11 +25,13 @@
 	    <exclude-mapping path="/member/memberEmailCheck"/>
 	    <exclude-mapping path="/member/memberEmailCheckOk"/>
 	    <exclude-mapping path="/member/memberEmailSearch"/>
+	    <exclude-mapping path="/member/kakaoLogin"/>
 	    <exclude-mapping path="/guest/**"/>
 	    <exclude-mapping path="/message/**"/>
 	    <beans:ref bean="level3Interceptor" />
 	  </interceptor>
 	  <interceptor>		
+	    <mapping path="/study/**"/>
 	    <mapping path="/board/**"/>
 	    <mapping path="/pds/pdsList"/>
 	    <mapping path="/pds/pdsDownload"/>

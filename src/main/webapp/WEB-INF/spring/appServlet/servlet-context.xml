@@ -3,9 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -22,6 +26,8 @@
 	<resources mapping="/data/**" location="/resources/data/" />
 	<resources mapping="/study/**" location="/resources/data/study/" />
 	<resources mapping="/pds/**" location="/resources/data/pds/" />
+	<resources mapping="/qrCode/**" location="/resources/data/qrCode/" />
+	<resources mapping="/thumbnail/**" location="/resources/data/thumbnail/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -39,5 +45,12 @@
 		<beans:property name="maxUploadSize" value="20971520" />
 		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
+	
+	<!-- 스케줄러 사용을 위한 빈 설정하기(servlet-context.xml에 스케줄을을 등록할때는 따로이 실행할 서비스빈을 생성하지 않아도 된다.) -->
+	<task:scheduler id="gsScheduler" pool-size="10"/>
+	<task:annotation-driven scheduler="gsScheduler" />
+	
+	<!-- 트랜잭션을 어노테이션으로 처리하기위해 설정 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 </beans:beans>

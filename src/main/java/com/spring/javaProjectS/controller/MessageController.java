@@ -89,8 +89,16 @@ public class MessageController {
 			model.addAttribute("msg", mid + "님 로그인 되셨습니다.");
 			model.addAttribute("url", "member/memberMain");
 		}
+		else if(msgFlag.equals("kakaoLoginOk")) {
+			model.addAttribute("msg", mid + "님 로그인 되셨습니다.");
+			model.addAttribute("url", "member/memberMain");
+		}
 		else if(msgFlag.equals("memberLogout")) {
 			model.addAttribute("msg", mid + "님 로그아웃 되었습니다.");
+			model.addAttribute("url", "member/memberLogin");
+		}
+		else if(msgFlag.equals("kakaoLogout")) {
+			model.addAttribute("msg", mid + "님 로그아웃 되었습니다.(KakaoLogout)");
 			model.addAttribute("url", "member/memberLogin");
 		}
 		else if(msgFlag.equals("memberJoinOk")) {
@@ -166,6 +174,14 @@ public class MessageController {
 			model.addAttribute("msg", "파일 업로드 실패~~");
 			model.addAttribute("url", "study/fileUpload/fileUpload");
 		}
+		else if(msgFlag.equals("multiFileUploadOk")) {
+			model.addAttribute("msg", "파일이 업로드 되었습니다.");
+			model.addAttribute("url", "study/fileUpload/multiFile");
+		}
+		else if(msgFlag.equals("multiFileUploadNo")) {
+			model.addAttribute("msg", "파일 업로드 실패~~");
+			model.addAttribute("url", "study/fileUpload/multiFile");
+		}
 		else if(msgFlag.equals("pdsInputOk")) {
 			model.addAttribute("msg", "자료실에 등록되었습니다.");
 			model.addAttribute("url", "pds/pdsList");
@@ -173,6 +189,22 @@ public class MessageController {
 		else if(msgFlag.equals("pdsInputNo")) {
 			model.addAttribute("msg", "자료실에 등록실패~~");
 			model.addAttribute("url", "pds/pdsInput");
+		}
+		else if(msgFlag.equals("thumbnailCreateOk")) {
+			model.addAttribute("msg", "썸네일 이미지가 생성되었습니다.");
+			model.addAttribute("url", "study/thumbnail/thumbnailForm");
+		}
+		else if(msgFlag.equals("thumbnailCreateNo")) {
+			model.addAttribute("msg", "썸네일 이미지 생성실패~~");
+			model.addAttribute("url", "study/thumbnail/thumbnailForm");
+		}
+		else if(msgFlag.equals("midSameSearch")) {
+			model.addAttribute("msg", "같은 아이디가 존재합니다.");
+			model.addAttribute("url", "member/memberLogin");
+		}
+		else if(msgFlag.equals("validateNo")) {
+			model.addAttribute("msg", "백앤드 체크 오류");
+			model.addAttribute("url", "/");
 		}
 		
 		

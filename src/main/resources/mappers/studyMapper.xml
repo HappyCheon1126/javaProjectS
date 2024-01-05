@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.javaProjectS.dao.StudyDAO">
+  
+  <select id="getKakaoAddressSearch" resultType="com.spring.javaProjectS.vo.KakaoAddressVO">
+  	select * from kakaoAddress where address = #{address};
+  </select>
+  
+  <select id="getKakaoAddressList" resultType="com.spring.javaProjectS.vo.KakaoAddressVO">
+  	select * from kakaoAddress order by address;
+  </select>
+  
+  <select id="getVisitCount" resultType="com.spring.javaProjectS.vo.ChartVO">
+  	select substring(visitDate, 1, 10) as visitDate, visitCount from visit order by visitDate desc limit 8;
+  </select>
+  
+  <select id="getQrCodeSearch" resultType="com.spring.javaProjectS.vo.QrCodeVO">
+    select * from qrCode where qrCodeName = #{qrCode};
+  </select>
+  
+  <select id="getTransactionList" resultType="com.spring.javaProjectS.vo.TransactionVO">
+    select * from user order by mid;
+  </select>
+  
+  <select id="getTransactionList2" resultType="com.spring.javaProjectS.vo.TransactionVO">
+    select * from user2 order by mid;
+  </select>
+  
+  
+  
+  <insert id="setKakaoAddressInput">
+    insert into kakaoAddress values (#{vo.address},#{vo.latitude},#{vo.longitude});
+  </insert>
+  
+  <insert id="setQrCodeCreate">
+    insert into qrCode values (default,#{vo.mid},#{vo.name},#{vo.email},#{vo.movieName},#{vo.movieDate},#{vo.movieTime},#{vo.movieAdult},#{vo.movieChild},#{vo.publishNow},#{vo.qrCodeName});
+  </insert>
+  
+  <insert id="setTransactionUser1Input">
+    insert into user values (default,#{vo.mid},#{vo.name},#{vo.age},#{vo.address});
+  </insert>
+  
+  <insert id="setTransactionUser2Input">
+    insert into user2 values (#{vo.mid},#{vo.job});
+  </insert>
+  
+  <insert id="setTransactionUserInput">
+    insert into user values (default,#{vo.mid},#{vo.name},#{vo.age},#{vo.address});
+    insert into user2 values (#{vo.mid},#{vo.job});
+  </insert>
+  
+  <insert id="setTransactionUserInput2">
+    insert into user values (default,#{mid},#{name},#{age},#{address});
+    insert into user2 values (#{mid},#{job});
+  </insert>
+  
+  
+  <delete id="setKakaoAddressDelete">
+    delete from kakaoAddress where address = #{address};
+  </delete>
+</mapper>
