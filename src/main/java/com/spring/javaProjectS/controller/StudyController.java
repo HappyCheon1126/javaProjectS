@@ -53,6 +53,7 @@ import com.spring.javaProjectS.common.ARIAUtil;
 import com.spring.javaProjectS.common.SecurityUtil;
 import com.spring.javaProjectS.service.StudyService;
 import com.spring.javaProjectS.vo.ChartVO;
+import com.spring.javaProjectS.vo.DbPayMentVO;
 import com.spring.javaProjectS.vo.KakaoAddressVO;
 import com.spring.javaProjectS.vo.MailVO;
 import com.spring.javaProjectS.vo.QrCodeVO;
@@ -928,4 +929,34 @@ public class StudyController {
   	
   	return "redirect:/study/transaction/transaction";
   }
+  
+  // 결제처리 연습하기 폼..
+  @RequestMapping(value = "/payment/payment", method = RequestMethod.GET)
+  public String paymentGet() {
+  	return "study/payment/payment";
+  }
+  
+  // 결제처리 연습하기 폼..
+  @RequestMapping(value = "/payment/payment", method = RequestMethod.POST)
+  public String paymentPost(Model model, HttpSession session, DbPayMentVO vo) {
+  	session.setAttribute("sPayMentVO", vo);
+  	model.addAttribute("vo", vo);
+  	return "study/payment/sample";
+  }
+  
+  // 결제처리완료후 확인하는 폼...
+  @RequestMapping(value = "/payment/paymentOk", method = RequestMethod.GET)
+  public String paymentOkGet(Model model, HttpSession session) {
+  	DbPayMentVO vo = (DbPayMentVO) session.getAttribute("sPayMentVO");
+  	model.addAttribute("vo", vo);
+  	return "study/payment/paymentOk";
+  }
+  
+	// 달력내역 가져오기
+	@RequestMapping(value = "/calendar/calendar", method = RequestMethod.GET)
+	public String calendarGet() {
+		studyService.getCalendar();
+		return "study/calendar/calendar";
+	}
+  
 }

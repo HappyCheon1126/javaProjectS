@@ -67,4 +67,9 @@ public class MemberServiceImpl implements MemberService {
 		memberDAO.setKakaoMemberInput(mid, pwd, nickName, email);
 	}
 
+	@Override
+	public List<MemberVO> getMemberList(int startIndexNo, int pageSize, String mid) {
+		return memberDAO.getMemberList(startIndexNo, pageSize, mid);
+	}
+
 }

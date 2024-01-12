@@ -15,6 +15,16 @@
       background-color: #eee;
     }
   </style>
+  <script>
+    'use strict';
+    
+    function fCheck() {
+    	let editor = CKEDITOR.instances.CKEDITOR.getData();		// ckeditor의 내용 보기
+    	alert("editor : " + editor);
+    	
+    	myform.submit();
+    }
+  </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/nav.jsp" />
@@ -60,7 +70,8 @@
       </tr>
       <tr>
         <td colspan="2" class="text-center">
-          <input type="submit" value="글올리기" class="btn btn-success" /> &nbsp;
+          <!-- <input type="submit" value="글올리기" class="btn btn-success" /> &nbsp; -->
+          <input type="button" value="글올리기" onclick="fCheck()" class="btn btn-success" /> &nbsp;
           <input type="reset" value="다시입력" class="btn btn-warning" /> &nbsp;
           <input type="button" onclick="location.href='boardList';" value="돌아가기" class="btn btn-info" />
         </td>

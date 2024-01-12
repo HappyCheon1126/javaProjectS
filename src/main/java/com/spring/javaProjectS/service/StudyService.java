@@ -62,4 +62,6 @@ public interface StudyService {
 
 	public void setTransactionUserInput2(String mid, String name, int age, String address, String job);
 
+	public void getCalendar();
+
 }

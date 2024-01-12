@@ -60,6 +60,7 @@
 	        <a href="${ctp}/study/password/aria" class="w3-bar-item w3-button">암호화(ARIA)</a>
 	        <a href="${ctp}/study/password/bCryptPassword" class="w3-bar-item w3-button">암호화(Security)</a>
 	        <a href="${ctp}/study/mail/mail" class="w3-bar-item w3-button">메일연습</a>
+	        <a href="${ctp}/study/calendar/calendar" class="w3-bar-item w3-button">인터넷달력</a>
 	        <a href="${ctp}/study/fileUpload/fileUpload" class="w3-bar-item w3-button">파일업로드</a>
 	        <a href="${ctp}/study/fileUpload/multiFile" class="w3-bar-item w3-button">멀티파일업로드</a>
 	      </div>
@@ -82,14 +83,27 @@
 	      </div>
 	    </div>
 	    <div class="w3-dropdown-hover w3-hide-small">
-	      <button class="w3-padding-large w3-button" title="More">MyPage <i class="fa fa-caret-down"></i></button>     
+	      <button class="w3-padding-large w3-button" title="More">Shopping mall <i class="fa fa-caret-down"></i></button>     
 	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
-	        <a href="${ctp}/user/userList" class="w3-bar-item w3-button">일정관리</a>
-	        <a href="${ctp}/user2/user2List" class="w3-bar-item w3-button">회원리스트</a>
+	        <a href="${ctp}/dbShop/dbProductList" class="w3-bar-item w3-button">상품리스트</a>
+	        <a href="${ctp}/dbShop/dbCartList" class="w3-bar-item w3-button">장바구니</a>
+	        <a href="${ctp}/" class="w3-bar-item w3-button">주문(배송)현황</a>
+	        <a href="${ctp}/study/payment/payment" class="w3-bar-item w3-button">결재연습</a>
+	        <a href="#" class="w3-bar-item w3-button">QnA</a>
+	        <a href="#" class="w3-bar-item w3-button">1:1문의</a>
+	      </div>
+	    </div>
+	    <div class="w3-dropdown-hover w3-hide-small">
+	      <button onclick="location.href='${ctp}/member/memberMain';" class="w3-padding-large w3-button" title="More">MyPage <i class="fa fa-caret-down"></i></button>     
+	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+	        <a href="${ctp}/schedule/schedule" class="w3-bar-item w3-button">일정관리</a>
+	        <a href="${ctp}/user/userList" class="w3-bar-item w3-button">회원리스트1</a>
+	        <a href="${ctp}/user2/user2List" class="w3-bar-item w3-button">회원리스트2</a>
 	        <a href="${ctp}/member/memberPwdCheck/p" class="w3-bar-item w3-button">비밀번호변경</a>
 	        <a href="${ctp}/member/memberPwdCheck/i" class="w3-bar-item w3-button">회원정보수정</a>
 	        <a href="javascript:userDelCheck()" class="w3-bar-item w3-button">회원탈퇴</a>
 	        <c:if test="${sLevel == 0}"><a href="${ctp}/admin/adminMain" class="w3-bar-item w3-button">관리자</a></c:if>
+	        <c:if test="${sLevel == 0}"><a href="${ctp}/admin/admin2" class="w3-bar-item w3-button">관리자2</a></c:if>
 	      </div>
 	    </div>
     </c:if>

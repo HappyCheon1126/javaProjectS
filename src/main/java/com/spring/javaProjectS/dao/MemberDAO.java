@@ -28,4 +28,8 @@ public interface MemberDAO {
 
 	public void setKakaoMemberInput(@Param("mid") String mid, @Param("pwd") String pwd, @Param("nickName") String nickName, @Param("email") String email);
 
+	public List<MemberVO> getMemberList(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize, @Param("mid") String mid);
+
+	public int totRecCnt(@Param("mid") String mid);
+
 }
