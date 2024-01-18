@@ -27,6 +27,7 @@
       <c:if test="${adminFlag=='dbShopList'}"><jsp:include page="dbShop/dbShopList.jsp" /></c:if>
       <c:if test="${adminFlag=='dbOption'}"><jsp:include page="dbShop/dbOption.jsp" /></c:if>
       <c:if test="${adminFlag=='dbShopContent'}"><jsp:include page="dbShop/dbShopContent.jsp" /></c:if>
+      <c:if test="${adminFlag=='dbOrderProcess'}"><jsp:include page="dbShop/dbOrderProcess.jsp" /></c:if>
       <c:if test="${adminFlag=='login'}"><jsp:include page="etc/login.jsp" /></c:if>
       <c:if test="${adminFlag=='register'}"><jsp:include page="etc/register.jsp" /></c:if>
       <c:if test="${adminFlag=='password'}"><jsp:include page="etc/password.jsp" /></c:if>

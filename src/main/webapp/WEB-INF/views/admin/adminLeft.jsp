@@ -53,7 +53,7 @@
       <div class="card-body p-1"><a href="${ctp}/dbShop/dbProduct" target="adminContent">상품등록관리</a></div>
       <div class="card-body p-1"><a href="${ctp}/dbShop/dbShopList" target="adminContent">상품등록조회</a></div>
       <div class="card-body p-1"><a href="${ctp}/dbShop/dbOption" target="adminContent">옵션등록관리</a></div>
-      <div class="card-body p-1"><a href="#" target="adminContent">주문관리</a></div>
+      <div class="card-body p-1"><a href="${ctp}/dbShop/adminOrderStatus" target="adminContent">주문관리</a></div>
       <div class="card-body p-1"><a href="#" target="adminContent">1:1문의</a></div>
       <div class="card-body p-1"><a href="#" target="adminContent">메인이미지관리</a></div>
     </div>

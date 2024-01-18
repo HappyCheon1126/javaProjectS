@@ -132,3 +132,23 @@ create table dbBaesong (
 desc dbBaesong;
 drop table dbBaesong;
 
+select * from dbOrder
+select count(*) from dbOrder
+select count(*) from dbOrder where date(orderDate) < substring(now(),1,10);
+SELECT count(*) from dbOrder a join dbBaesong b using(orderIdx) 
+        where b.mid='cjsk1126' and date(orderDate) >= date('2024-01-01') and date(orderDate) <= date('2024-02-17') order by orderDate desc;
+SELECT count(*) from dbOrder o, dbBaesong b where o.orderIdx = b.orderIdx 
+        and b.mid='cjsk1126' and date(o.orderDate) >= date('2024-01-01') and date(o.orderDate) <= date('2024-02-17') order by o.orderDate desc;
+SELECT count(*) from dbOrder o, dbBaesong b where o.orderIdx = b.orderIdx 
+        and b.mid='cjsk1126' and date_format(o.orderDate,'%Y-%m-%d') <= '2024-01-17';
+
+select * from dbOrder where date_format(orderDate,'%Y-%m-%d') <= '2024-01-17';
+select * from dbOrder where orderDate <= '2024-01-17';
+select * from dbOrder where orderDate >= '2024-01-11' and orderDate <= '2024-01-17';
+select count(*) from dbOrder where orderDate >= '2024-01-11' and orderDate <= '2024-01-17';
+
+
+
+SELECT * from dbOrder o, dbBaesong b where o.orderIdx = b.orderIdx and b.mid='cjsk1126' and o.orderDate >= '2024-01-01' and o.orderDate <= '2024-01-17';
+
+SELECT count(*) from dbOrder o, dbBaesong b where o.orderIdx = b.orderIdx and b.mid='cjsk1126' and o.orderDate >= '2024-01-01' and o.orderDate <= '2024-01-17';

@@ -90,4 +90,12 @@ public interface DbShopService {
 
 	public List<DbBaesongVO> getOrderBaesong(String orderIdx);
 
+	public List<DbBaesongVO> getMyOrderList(int startIndexNo, int pageSize, String mid);
+
+	public List<DbBaesongVO> getMyOrderStatus(int startIndexNo, int pageSize, String mid, String startJumun, String endJumun, String conditionOrderStatus);
+
+	public List<DbBaesongVO> getAdminOrderStatus(int startIndexNo, int pageSize, String startJumun, String endJumun, String orderStatus);
+
+	public int setOrderStatusUpdate(String orderIdx, String orderStatus);
+
 }

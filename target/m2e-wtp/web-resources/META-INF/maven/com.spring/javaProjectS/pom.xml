@@ -279,7 +279,7 @@
 	    <version>4.3.14.RELEASE</version>
 		</dependency>
 		
-		
+
 		
 		
 		
@@ -326,6 +326,15 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
+            
+         		<!-- 자바버젼을 17로 변경후 플러그인 추가하기 -->
+         		<!-- 
+						<plugin>
+						  <groupId>org.apache.maven.plugins</groupId>
+						  <artifactId>maven-war-plugin</artifactId>
+						  <version>3.3.2</version>
+						</plugin>
+						 -->
         </plugins>
     </build>
 </project>

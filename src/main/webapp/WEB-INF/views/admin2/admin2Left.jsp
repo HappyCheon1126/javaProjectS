@@ -21,6 +21,7 @@
                 <a class="nav-link" href="${ctp}/dbShop2/dbProduct">상품등록관리</a>
                 <a class="nav-link" href="${ctp}/dbShop2/dbShopList">상품등록조회</a>
                 <a class="nav-link" href="${ctp}/dbShop2/dbOption">옵션등록관리</a>
+                <a class="nav-link" href="${ctp}/dbShop2/adminOrderStatus">주문관리</a>
               </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

@@ -19,10 +19,12 @@
     'use strict';
     
     function fCheck() {
+    	let title = document.getElementById("title").value;
     	let editor = CKEDITOR.instances.CKEDITOR.getData();		// ckeditor의 내용 보기
-    	alert("editor : " + editor);
-    	
-    	myform.submit();
+    	//alert("editor : " + editor);
+    	if(title.trim() == "") alert("글 제목을 입력하세요");
+    	else if(editor == "") alert("글 내용을 입력하세요");
+    	else myform.submit();
     }
   </script>
 </head>

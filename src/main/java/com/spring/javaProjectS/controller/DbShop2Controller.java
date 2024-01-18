@@ -15,14 +15,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.javaProjectS.pagination.PageProcess;
+import com.spring.javaProjectS.pagination.PageVO;
 import com.spring.javaProjectS.service.DbShopService;
+import com.spring.javaProjectS.vo.DbBaesongVO;
 import com.spring.javaProjectS.vo.DbCartVO;
 import com.spring.javaProjectS.vo.DbOptionVO;
 import com.spring.javaProjectS.vo.DbProductVO;
@@ -33,6 +35,9 @@ public class DbShop2Controller {
 
 	@Autowired
 	DbShopService dbShopService;
+	
+	@Autowired
+	PageProcess pageProcess;
 	
 	// 분류 등록폼 호출 및 출력
 	//@RequestMapping(value = "/{adminFlag}", method = RequestMethod.GET)
@@ -275,6 +280,51 @@ public class DbShop2Controller {
 	@RequestMapping(value="/optionDelete", method = RequestMethod.POST)
 	public String optionDeletePost(int idx) {
 		int res = dbShopService.setOptionDelete(idx);
+		return res + "";
+	}
+	
+  // 관리자에서 관리자가 주문 확인하기
+	@RequestMapping(value="/adminOrderStatus")
+	public String dbOrderProcessGet(Model model,
+    @RequestParam(name="startJumun", defaultValue="", required=false) String startJumun,
+    @RequestParam(name="endJumun", defaultValue="", required=false) String endJumun,
+    @RequestParam(name="orderStatus", defaultValue="전체", required=false) String orderStatus,
+    @RequestParam(name="pag", defaultValue="1", required=false) int pag,
+    @RequestParam(name="pageSize", defaultValue="5", required=false) int pageSize) {
+
+		List<DbBaesongVO> vos = null;
+		PageVO pageVO = null;
+		String strNow = "";
+		if(startJumun.equals("")) {
+			Date now = new Date();
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    strNow = sdf.format(now);
+	    
+	    startJumun = strNow;
+	    endJumun = strNow;
+		}
+    
+    String strOrderStatus = startJumun + "@" + endJumun + "@" + orderStatus;
+    pageVO = pageProcess.totRecCnt(pag, pageSize, "adminDbOrderProcess", "", strOrderStatus);
+
+		vos = dbShopService.getAdminOrderStatus(pageVO.getStartIndexNo(), pageSize, startJumun, endJumun, orderStatus);
+	
+	  model.addAttribute("startJumun", startJumun);
+	  model.addAttribute("endJumun", endJumun);
+	  model.addAttribute("orderStatus", orderStatus);
+	  model.addAttribute("vos", vos);
+	  model.addAttribute("pageVO", pageVO);
+	
+	  //return "admin2/dbShop/dbOrderProcess";
+	  model.addAttribute("adminFlag", "dbOrderProcess");
+		return "admin2/admin2";
+	}
+	
+	// 주문관리에서, 관리자가 주문상태를 변경처리하는것
+	@ResponseBody
+	@RequestMapping(value="/goodsStatus", method=RequestMethod.POST)
+	public String goodsStatusGet(String orderIdx, String orderStatus) {
+		int res = dbShopService.setOrderStatusUpdate(orderIdx, orderStatus);
 		return res + "";
 	}
 	

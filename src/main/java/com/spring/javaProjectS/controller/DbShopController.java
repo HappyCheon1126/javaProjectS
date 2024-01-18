@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.javaProjectS.pagination.PageProcess;
+import com.spring.javaProjectS.pagination.PageVO;
 import com.spring.javaProjectS.service.DbShopService;
 import com.spring.javaProjectS.service.MemberService;
 import com.spring.javaProjectS.vo.DbBaesongVO;
@@ -42,6 +44,9 @@ public class DbShopController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	PageProcess pageProcess;
 	
 	// 분류 등록폼 호출 및 출력
 	@RequestMapping(value = "/dbCategory", method = RequestMethod.GET)
@@ -280,6 +285,49 @@ public class DbShopController {
 		return res + "";
 	}
 	
+  // 관리자에서 관리자가 주문 확인하기
+	@RequestMapping(value="/adminOrderStatus")
+	public String dbOrderProcessGet(Model model,
+    @RequestParam(name="startJumun", defaultValue="", required=false) String startJumun,
+    @RequestParam(name="endJumun", defaultValue="", required=false) String endJumun,
+    @RequestParam(name="orderStatus", defaultValue="전체", required=false) String orderStatus,
+    @RequestParam(name="pag", defaultValue="1", required=false) int pag,
+    @RequestParam(name="pageSize", defaultValue="5", required=false) int pageSize) {
+
+		List<DbBaesongVO> vos = null;
+		PageVO pageVO = null;
+		String strNow = "";
+		if(startJumun.equals("")) {
+			Date now = new Date();
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    strNow = sdf.format(now);
+	    
+	    startJumun = strNow;
+	    endJumun = strNow;
+		}
+    
+    String strOrderStatus = startJumun + "@" + endJumun + "@" + orderStatus;
+    pageVO = pageProcess.totRecCnt(pag, pageSize, "adminDbOrderProcess", "", strOrderStatus);
+    
+		vos = dbShopService.getAdminOrderStatus(pageVO.getStartIndexNo(), pageSize, startJumun, endJumun, orderStatus);
+	
+	  model.addAttribute("startJumun", startJumun);
+	  model.addAttribute("endJumun", endJumun);
+	  model.addAttribute("orderStatus", orderStatus);
+	  model.addAttribute("vos", vos);
+	  model.addAttribute("pageVO", pageVO);
+	
+	  return "admin/dbShop/dbOrderProcess";
+	}
+	
+	// 주문관리에서, 관리자가 주문상태를 변경처리하는것
+	@ResponseBody
+	@RequestMapping(value="/goodsStatus", method=RequestMethod.POST)
+	public String goodsStatusGet(String orderIdx, String orderStatus) {
+		int res = dbShopService.setOrderStatusUpdate(orderIdx, orderStatus);
+		return res + "";
+	}
+	
 	
 		
 /*  =========== 위쪽은 관리자 처리 화면입니다.......  ====================================================================================== */
@@ -448,7 +496,7 @@ public class DbShopController {
 			vo.setIdx(Integer.parseInt(vo.getOrderIdx().substring(8)));	
 			vo.setOrderIdx(vo.getOrderIdx());
 			vo.setMid(vo.getMid());							
-			System.out.println("vo(order) : " + vo);
+			//System.out.println("vo(order) : " + vo);
 			dbShopService.setDbOrder(vo);		// 주문/결제 처리된 내용을 주문테이블(dbOrder)에 저장시킨다.
 			dbShopService.setDbCartDeleteAll(vo.getCartIdx());	// 주문이 완료되었기에 장바구니테이블에서 주문한 내역을 삭제한다.
 			
@@ -467,7 +515,7 @@ public class DbShopController {
 		// 총 주문금액이 5만원 미만이면, 배송비를 3000원으로 추가시킨다.
 		if(totalBaesongOrder < 50000) baesongVO.setOrderTotalPrice(totalBaesongOrder + 3000);
 		else baesongVO.setOrderTotalPrice(totalBaesongOrder);
-		System.out.println("baesongVO : " + baesongVO);
+		//System.out.println("baesongVO : " + baesongVO);
 		dbShopService.setDbBaesong(baesongVO);	// 배송내역을 배송테이블(dbBaesong)에 저장한다.
 		dbShopService.setMemberPointPlus((int)(baesongVO.getOrderTotalPrice() * 0.01), orderVOS.get(0).getMid());
 		
@@ -510,4 +558,56 @@ public class DbShopController {
 		
 		return "dbShop/dbOrderBaesong";
 	}
+	
+	@RequestMapping(value="/dbMyOrder", method=RequestMethod.GET)
+	public String dbMyOrderGet(HttpServletRequest request, HttpSession session, Model model,
+			String startJumun, 
+			String endJumun, 
+			@RequestParam(name="pag", defaultValue="1", required=false) int pag,
+			@RequestParam(name="pageSize", defaultValue="5", required=false) int pageSize,
+  	  @RequestParam(name="conditionOrderStatus", defaultValue="전체", required=false) String conditionOrderStatus) {
+		
+		String mid = (String) session.getAttribute("sMid");
+		int level = (int) session.getAttribute("sLevel");
+		if(level == 0) mid = "전체";
+		
+		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "dbMyOrder", mid, "");
+		
+		// 오늘 구매한 내역을 초기화면에 보여준다.
+		List<DbBaesongVO> vos = dbShopService.getMyOrderList(pageVO.getStartIndexNo(), pageSize, mid);
+		
+		model.addAttribute("vos", vos);				
+		model.addAttribute("startJumun", startJumun);
+		model.addAttribute("endJumun", endJumun);
+		model.addAttribute("conditionOrderStatus", conditionOrderStatus);
+		model.addAttribute("pageVO", pageVO);
+		
+		return "dbShop/dbMyOrder";
+	}
+	
+	@RequestMapping(value="/myOrderStatus", method=RequestMethod.GET)
+	public String myOrderStatusGet(Model model, HttpServletRequest request, HttpSession session, 
+			String startJumun, String endJumun, 
+			@RequestParam(name="pag", defaultValue="1", required=false) int pag,
+			@RequestParam(name="pageSize", defaultValue="5", required=false) int pageSize,
+  	  @RequestParam(name="conditionOrderStatus", defaultValue="전체", required=false) String conditionOrderStatus) {
+		String mid = (String) session.getAttribute("sMid");
+		int level = (int) session.getAttribute("sLevel");
+		
+		if(level == 0) mid = "전체";
+		String searchString = startJumun + "@" + endJumun + "@" + conditionOrderStatus;
+		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "myOrderStatus", mid, searchString);  // 4번째인자에 '아이디/조건'(을)를 넘겨서 part를 아이디로 검색처리하게 한다.
+		
+		List<DbBaesongVO> vos = dbShopService.getMyOrderStatus(pageVO.getStartIndexNo(), pageSize, mid, startJumun, endJumun, conditionOrderStatus);
+		model.addAttribute("vos", vos);				
+		model.addAttribute("startJumun", startJumun);
+		model.addAttribute("endJumun", endJumun);
+		model.addAttribute("conditionOrderStatus", conditionOrderStatus);
+		model.addAttribute("pageVO", pageVO);
+		
+		return "dbShop/dbMyOrder";
+	}
+	
+	
+	
 }

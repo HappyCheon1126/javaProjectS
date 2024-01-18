@@ -328,4 +328,24 @@ public class DbShopServiceImpl implements DbShopService {
 		return dbShopDAO.getOrderBaesong(orderIdx);
 	}
 
+	@Override
+	public List<DbBaesongVO> getMyOrderList(int startIndexNo, int pageSize, String mid) {
+		return dbShopDAO.getMyOrderList(startIndexNo, pageSize, mid);
+	}
+
+	@Override
+	public List<DbBaesongVO> getMyOrderStatus(int startIndexNo, int pageSize, String mid, String startJumun, String endJumun, String conditionOrderStatus) {
+		return dbShopDAO.getMyOrderStatus(startIndexNo, pageSize, mid, startJumun, endJumun, conditionOrderStatus);
+	}
+
+	@Override
+	public List<DbBaesongVO> getAdminOrderStatus(int startIndexNo, int pageSize, String startJumun, String endJumun, String orderStatus) {
+		return dbShopDAO.getAdminOrderStatus(startIndexNo, pageSize, startJumun, endJumun, orderStatus);
+	}
+
+	@Override
+	public int setOrderStatusUpdate(String orderIdx, String orderStatus) {
+		return dbShopDAO.setOrderStatusUpdate(orderIdx, orderStatus);
+	}
+
 }
