@@ -5,5 +5,5 @@
 의류쇼핑몰 재고/판매 관리
 
 <hr/>
-<a href="http://49.142.157.251:9090/javaProjectS/">의류 쇼핑몰</a>
+<a href="http://49.142.157.251:9090/javaProjectS/" target="_blank">의류 쇼핑몰</a>
 <hr/>
